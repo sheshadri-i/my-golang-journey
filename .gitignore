@@ -1,0 +1,16 @@
+# Go build and dependency files
+/bin/
+/build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace file
+go.work
+
+# Logs
+*.log
