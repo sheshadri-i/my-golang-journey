@@ -11,6 +11,7 @@
 
 # Go workspace file
 go.work
+Go.code-workspace
 
 # Logs
 *.log
