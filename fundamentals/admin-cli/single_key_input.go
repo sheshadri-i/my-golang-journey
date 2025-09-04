@@ -1,11 +1,12 @@
 // Reference: Learn Go for Beginners Crash Course (Udemy) by Trevor Sawler.
 //
+// This example demonstrates how to handle single key input in a Go CLI using
+// the eiannone/keyboard package. You can start, stop, check status, or quit a service
+// with a single keystroke—no need to press Enter.
+
 // github.com/eiannone/keyboard: This is a popular third-party library that simplifies
 // reading keyboard input in Go. It abstracts away the complexity of handling raw
 // terminal modes across different operating systems.
-//
-// You call keyboard.Open() to start listening for key presses, and then use a simple API
-// to read events. This package is easy to use and handles cross-platform differences for you.
 
 package main
 
@@ -18,12 +19,13 @@ import (
 )
 
 func main() {
+	// Open the keyboard for single key input
 	if err := keyboard.Open(); err != nil {
 		log.Fatal(err)
 	}
 	defer keyboard.Close()
 
-	serviceRunning := false
+	serviceRunning := false // Tracks service state
 	fmt.Println("Server Admin CLI:")
 	fmt.Println("Press")
 	fmt.Println("  y - Start service")
@@ -31,15 +33,18 @@ func main() {
 	fmt.Println("  q - Quit")
 	fmt.Println("  any other key - Show service status.")
 
+	// Main loop: handle key presses
 	for {
 		char, key, err := keyboard.GetKey()
 		if err != nil {
 			log.Fatal(err)
 		}
+		// Delegate key handling to a separate function
 		handleKeyPress(char, key, &serviceRunning)
 	}
 }
 
+// handleKeyPress processes a single key press and updates service state
 func handleKeyPress(char rune, key keyboard.Key, serviceRunning *bool) {
 	if key == keyboard.KeyEsc || char == 'q' || char == 'Q' {
 		fmt.Println("Quitting admin CLI...")
